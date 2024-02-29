@@ -13,7 +13,7 @@ resource "azurerm_storage_account" "backup" {
   account_kind = "StorageV2"
 
   lifecycle {
-    prevent_destroy = var.backup_sa_prevent_destroy
+    prevent_destroy = true
     ignore_changes  = [tags]
   }
 
@@ -30,7 +30,7 @@ resource "azurerm_storage_data_lake_gen2_filesystem" "data-lake-backup" {
   storage_account_id = azurerm_storage_account.backup.id
   depends_on = [ azurerm_storage_account.backup ]
   lifecycle {
-    prevent_destroy = var.backup_sa_prevent_destroy
+    prevent_destroy = true
   }
 }
 

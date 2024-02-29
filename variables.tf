@@ -56,11 +56,6 @@ variable "main_storage_account_primary_dfs_endpoint" {
 variable "source_container" {
   description = "source container that the data is being backed up from"
 }
-variable "backup_sa_prevent_destroy" {
-  type = bool
-  default = true
-  description = "prevent destroy for the backup storage account"
-}
 
 
 

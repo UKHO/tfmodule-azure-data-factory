@@ -76,10 +76,6 @@ variable "main_storage_account_primary_dfs_endpoint" {
 variable "source_container" {
   description = "source container that the data is being backed up from"
 }
-variable "backup_sa_prevent_destroy" {
-  default = true
-  description = "prevent destroy for the backup storage account"
-}
 
 #Example ref
 
@@ -93,7 +89,6 @@ depends_on                                = [# Refer to existing SA]
 main_storage_account                      = var.main_sa
 main_storage_account_id                   = format("/subscriptions/%s/resourceGroups/%s/providers/Microsoft.Storage/storageAccounts/%s", var.subscription_id, var.rg, azurerm_storage_account.edu_storage_account_data.name)
 main_storage_account_primary_dfs_endpoint = var.main_sa_dfs_endpoint
-backup_sa_prevent_destroy                 = true
 source_container                          = var.source_container
 product_alias                             = var.alias
 name                                      = var.name
