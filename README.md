@@ -105,5 +105,5 @@ key_vault_id                              = "/subscriptions/${var.subscription_i
 subnet_ids                                = var.subnet_ids
 pe_subnet_id                              = var.pe_subnet_id
 dns_zone_rg                               = var.dns_resource_group
-org_ip_addresses                         = var.org_ips
+org_ip_addresses                          = var.org_ips
 build_agent_subnet_ids                    = var.agent_subnet_ids
