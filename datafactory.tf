@@ -36,6 +36,10 @@ resource "azurerm_private_endpoint" "data_factory" {
     name                 = "${var.product_alias}-adf-dns-group-${var.environment_name}"
     private_dns_zone_ids = [data.azurerm_private_dns_zone.dnszone.id]
   }
+
+  lifecycle {
+    ignore_changes = [tags]
+  }
 }
 
 resource "azurerm_private_dns_zone_virtual_network_link" "linkdns" {
@@ -44,6 +48,10 @@ resource "azurerm_private_dns_zone_virtual_network_link" "linkdns" {
   resource_group_name   = var.dns_zone_rg
   private_dns_zone_name = data.azurerm_private_dns_zone.dnszone.name
   virtual_network_id    = var.virtual_network_id
+  
+  lifecycle {
+    ignore_changes = [tags]
+  }
 }
 
 
