@@ -46,5 +46,5 @@ resource "azurerm_management_lock" "adls_lock" {
   scope      = azurerm_storage_account.backup.id
   lock_level = "CanNotDelete"
   notes      = "To protect Prod Data"
-  count      = (var.environment_name == "prod" || var.environment_name == "live") ? 1 : 0
+  count      = var.environment_name == "live" ? 1: 0
 }
