@@ -11,7 +11,7 @@ criteria {
     threshold        = 0
 }
 
-## You will need this created in your terraform
+## You will need the action group created in your terraform
 
 action {
     action_group_id = var.monitor_action_group_id
