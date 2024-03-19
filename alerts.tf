@@ -14,6 +14,6 @@ criteria {
 ## You will need this created in your terraform
 
 action {
-    action_group_id = var.monitor_action_group
+    action_group_id = var.monitor_action_group_id
     }
 }

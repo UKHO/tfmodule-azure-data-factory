@@ -56,8 +56,8 @@ variable "main_storage_account_primary_dfs_endpoint" {
 variable "source_container" {
   description = "source container that the data is being backed up from"
 }
-variable "monitor_action_group" {
-  description = "monitor action group reference"
+variable "monitor_action_group_id" {
+  description = "monitor action group reference id"
 }
 
 
