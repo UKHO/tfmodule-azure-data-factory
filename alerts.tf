@@ -1,7 +1,8 @@
 resource "azurerm_monitor_metric_alert" "adf_pipeline_failure_alert" {
-  name                = "adf-pipeline-failure-alert"
-  resource_group_name = var.resource_group_name
-  scopes              = [ azurerm_data_factory.this.id ]
+    name                = "adf-pipeline-failure-alert"
+    provider            = azurerm.sub
+    resource_group_name = var.resource_group_name
+    scopes              = [ azurerm_data_factory.this.id ]
 
 criteria {
     metric_namespace = "Microsoft.DataFactory/factories/pipelines"
