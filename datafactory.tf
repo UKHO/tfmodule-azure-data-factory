@@ -76,7 +76,7 @@ resource "azurerm_data_factory_pipeline" "incremental_backup" {
   data_factory_id = azurerm_data_factory.this.id
 
   parameters = {
-    ScheduledTriggerTime: "Variable not set"
+    ScheduledTriggerTime : "Variable not set"
   }
   activities_json = templatefile("${path.module}/data-factory-pipeline-incremental.tpl", { sourceDataset = azurerm_data_factory_dataset_binary.data_lake_dataset.name, sinkDataset = azurerm_data_factory_dataset_binary.backup_dataset.name })
 }
@@ -87,7 +87,7 @@ resource "azurerm_data_factory_pipeline" "full_backup" {
   data_factory_id = azurerm_data_factory.this.id
 
   parameters = {
-    ScheduledTriggerTime: "Variable not set"
+    ScheduledTriggerTime : "Variable not set"
   }
   activities_json = templatefile("${path.module}/data-factory-pipeline-full.tpl", { sourceDataset = azurerm_data_factory_dataset_binary.data_lake_dataset.name, sinkDataset = azurerm_data_factory_dataset_binary.backup_dataset.name })
 }
@@ -147,7 +147,7 @@ resource "azurerm_data_factory_trigger_schedule" "incremental" {
   data_factory_id     = azurerm_data_factory.this.id
   pipeline_name       = azurerm_data_factory_pipeline.incremental_backup.name
   pipeline_parameters = {
-    "ScheduledTriggerTime": "@trigger().scheduledTime"
+    "ScheduledTriggerTime" : "@trigger().scheduledTime"
   }
   time_zone  = "UTC"
   start_time = "2018-01-01T00:00:00Z"
@@ -161,7 +161,7 @@ resource "azurerm_data_factory_trigger_schedule" "full" {
   data_factory_id     = azurerm_data_factory.this.id
   pipeline_name       = azurerm_data_factory_pipeline.full_backup.name
   pipeline_parameters = {
-    "ScheduledTriggerTime": "@trigger().scheduledTime"
+    "ScheduledTriggerTime" : "@trigger().scheduledTime"
   }
   time_zone  = "UTC"
   start_time = "2018-01-01T00:00:00Z"
