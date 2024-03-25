@@ -23,8 +23,6 @@ criteria {
     threshold        = 0
 }
 
-## You will need the action group created in your terraform
-
 action {
     action_group_id = azurerm_monitor_action_group.adf_alerts_monitor.id
     }
