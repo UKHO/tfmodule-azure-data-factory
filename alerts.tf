@@ -3,10 +3,9 @@ resource "azurerm_monitor_action_group" "adf_alerts_monitor" {
     resource_group_name = var.resource_group_name
     short_name = "${var.name}-adf-alerts-${var.environment_name}"
 
-    email_receiver {
-    name = "Email"
-    email_address = var.alerts_email
-    use_common_alert_schema = true
+    webhook_receiver {
+        name = "TeamsWebhook"
+        service_uri = var.teams_url
     }
 }
 

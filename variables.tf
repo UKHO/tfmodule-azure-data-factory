@@ -56,8 +56,8 @@ variable "main_storage_account_primary_dfs_endpoint" {
 variable "source_container" {
   description = "source container that the data is being backed up from"
 }
-variable "alerts_email" {
-description = "email for alerts"
+variable "teams_url" {
+description = "Teams webhook endpoint for alerts"
 }
 
 
