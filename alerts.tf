@@ -17,8 +17,8 @@ resource "azurerm_monitor_metric_alert" "adf_pipeline_failure_alert" {
     scopes              = [ azurerm_data_factory.this.id ]
 
 criteria {
-    metric_namespace = "Microsoft.DataFactory/datafactories"
-    metric_name      = "FailedRuns"
+    metric_namespace = "Microsoft.DataFactory/factories"
+    metric_name      = "PipelineFailedRuns"
     aggregation      = "Total"
     operator         = "GreaterThan"
     threshold        = 0
