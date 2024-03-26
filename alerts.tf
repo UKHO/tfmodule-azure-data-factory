@@ -2,6 +2,7 @@ resource "azurerm_monitor_action_group" "adf_alerts_monitor" {
     name                = "${var.org}-${var.name}-adf-alerts-monitor-${var.environment_name}"
     resource_group_name = var.resource_group_name
     short_name          = "${var.name}-adf-alerts-${var.environment_name}"
+    provider            = azurerm.sub
 
     webhook_receiver {
         name        = "TeamsWebhook"
