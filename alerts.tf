@@ -4,13 +4,13 @@ resource "azurerm_monitor_action_group" "adf_alerts_monitor" {
     short_name          = "${var.name}alerts${var.environment_name}"
     provider            = azurerm.sub
 
+    email_receiver {
+        name = "Email-Alert"
+        email_address = var.alert_email_address
+        use_common_alert_schema = true
+    }
     lifecycle {
         ignore_changes = [tags]
-    }
-
-    webhook_receiver {
-        name        = "TeamsWebhook"
-        service_uri = var.teams_url
     }
 }
 
