@@ -27,7 +27,7 @@ resource "azurerm_monitor_metric_alert" "adf_pipeline_failure_alert" {
         operator         = "GreaterThan"
         threshold        = 0
         dimension {
-            name     = "PipelineName"
+            name     = "Name"
             operator = "Include"
             values   = [azurerm_data_factory_pipeline.full_backup.name, azurerm_data_factory_pipeline.incremental_backup.name]
         }
