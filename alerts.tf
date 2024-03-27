@@ -55,9 +55,9 @@ resource "azurerm_monitor_metric_alert" "adf_pipeline_success_alert" {
         operator         = "GreaterThan"
         threshold        = 0
         dimension {
-            name     = "PipelineName"
+            name     = "Name"
             operator = "Include"
-            values   = ["${var.environment_name}DataLakeBackupFull", "${var.environment_name}DataLakeBackupIncremental"]
+            values   = [azurerm_data_factory_pipeline.full_backup.name, azurerm_data_factory_pipeline.incremental_backup.name]
         }
 }
 
