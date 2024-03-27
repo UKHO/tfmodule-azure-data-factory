@@ -5,8 +5,8 @@ resource "azurerm_monitor_action_group" "adf_alerts_monitor" {
     provider            = azurerm.sub
 
     email_receiver {
-        name = "Email-Alert"
-        email_address = var.alert_email_address
+        name                    = "Email-Alert"
+        email_address           = var.alert_email_address
         use_common_alert_schema = true
     }
     lifecycle {
