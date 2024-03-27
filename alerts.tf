@@ -1,7 +1,7 @@
 resource "azurerm_monitor_action_group" "adf_alerts_monitor" {
     name                = "${var.org}-${var.name}-adf-alerts-monitor-${var.environment_name}"
     resource_group_name = var.resource_group_name
-    short_name          = "${var.name}a${var.environment_name}"
+    short_name          = "${var.product_alias}a${var.environment_name}"
     provider            = azurerm.sub
 
     email_receiver {
