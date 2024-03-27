@@ -76,6 +76,9 @@ variable "main_storage_account_primary_dfs_endpoint" {
 variable "source_container" {
   description = "source container that the data is being backed up from"
 }
+variable "alert_email_address" {
+description = "Email Address for alerts"
+}
 
 #Example ref
 
@@ -102,3 +105,4 @@ pe_subnet_id                              = var.pe_subnet_id
 dns_zone_rg                               = var.dns_resource_group
 org_ip_addresses                          = var.org_ips
 build_agent_subnet_ids                    = var.agent_subnet_ids
+alert_email_address                       = var.alert_email_address 
