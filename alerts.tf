@@ -29,7 +29,7 @@ resource "azurerm_monitor_metric_alert" "adf_pipeline_failure_alert" {
         dimension {
             name     = "PipelineName"
             operator = "Include"
-            values   = ["${var.environment_name}DataLakeBackupFull", "${var.environment_name}DataLakeBackupIncremental"]
+            values   = [azurerm_data_factory_pipeline.full_backup.name, azurerm_data_factory_pipeline.incremental_backup.name]
         }
     }
 
