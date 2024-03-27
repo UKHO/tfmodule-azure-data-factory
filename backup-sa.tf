@@ -32,6 +32,7 @@ resource "azurerm_storage_data_lake_gen2_filesystem" "data-lake-backup" {
 
 resource "azurerm_key_vault_secret" "backup_storage_key" {
   key_vault_id = var.key_vault_id
+  provider     = azurerm.sub
   name         = "backup-storage-key"
   value        = azurerm_storage_account.backup.primary_access_key
   content_type = "secret"

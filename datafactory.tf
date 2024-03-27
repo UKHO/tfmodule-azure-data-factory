@@ -3,6 +3,7 @@ resource "azurerm_data_factory" "this" {
   name                   = "${var.org}-${var.name}-adf-${var.environment_name}"
   location               = var.location
   resource_group_name    = var.resource_group_name
+  provider               = azurerm.sub
   public_network_enabled = false
   identity {
     type = "SystemAssigned"
@@ -13,13 +14,13 @@ resource "azurerm_data_factory" "this" {
 }
 
 data "azurerm_private_dns_zone" "dnszone" {
-  provider                = azurerm.hub
-  name                    = "privatelink.datafactory.azure.net"
-  resource_group_name     = var.dns_zone_rg
+  provider            = azurerm.hub
+  name                = "privatelink.datafactory.azure.net"
+  resource_group_name = var.dns_zone_rg
 }
 
 resource "azurerm_private_endpoint" "data_factory" {
-  
+  provider            = azurerm.sub
   name                = "${var.product_alias}-${var.environment_name}-adf-pe"
   resource_group_name = var.resource_group_name
   location            = var.location
@@ -56,18 +57,21 @@ resource "azurerm_private_dns_zone_virtual_network_link" "linkdns" {
 
 
 resource "azurerm_role_assignment" "data_lake_storage_read" {
+  provider             = azurerm.sub
   scope                = var.main_storage_account_id
   role_definition_name = "Storage Blob Data Reader"
   principal_id         = azurerm_data_factory.this.identity[0].principal_id
 }
 
 resource "azurerm_role_assignment" "backup_storage_write" {
+  provider             = azurerm.sub
   scope                = azurerm_storage_account.backup.id
   role_definition_name = "Storage Blob Data Contributor"
   principal_id         = azurerm_data_factory.this.identity[0].principal_id
 }
 
 resource "azurerm_data_factory_pipeline" "incremental_backup" {
+  provider        = azurerm.sub
   name            = "${var.environment_name}DataLakeBackupIncremental"
   data_factory_id = azurerm_data_factory.this.id
 
@@ -78,6 +82,7 @@ resource "azurerm_data_factory_pipeline" "incremental_backup" {
 }
 
 resource "azurerm_data_factory_pipeline" "full_backup" {
+  provider        = azurerm.sub
   name            = "${var.environment_name}DataLakeBackupFull"
   data_factory_id = azurerm_data_factory.this.id
 
@@ -88,6 +93,7 @@ resource "azurerm_data_factory_pipeline" "full_backup" {
 }
 
 resource "azurerm_data_factory_linked_service_data_lake_storage_gen2" "data_lake_storage" {
+  provider             = azurerm.sub
   name                 = "${var.environment_name}DataLakeStorageService"
   data_factory_id      = azurerm_data_factory.this.id
   use_managed_identity = true
@@ -95,6 +101,7 @@ resource "azurerm_data_factory_linked_service_data_lake_storage_gen2" "data_lake
 }
 
 resource "azurerm_data_factory_linked_service_data_lake_storage_gen2" "backup_storage" {
+  provider             = azurerm.sub
   name                 = "${var.environment_name}BackupStorageService"
   data_factory_id      = azurerm_data_factory.this.id
   use_managed_identity = true
@@ -104,7 +111,7 @@ resource "azurerm_data_factory_linked_service_data_lake_storage_gen2" "backup_st
 resource "azurerm_data_factory_dataset_binary" "data_lake_dataset" {
   # Dataset resources can't currently be updated due to a bug https://github.com/terraform-providers/terraform-provider-azurerm/issues/11650
   # To modify this resource you will need to manually delete it first
-
+  provider            = azurerm.sub
   name                = "${var.environment_name}DataLakeStorageDataset"
   data_factory_id     = azurerm_data_factory.this.id
   linked_service_name = azurerm_data_factory_linked_service_data_lake_storage_gen2.data_lake_storage.name
@@ -119,25 +126,26 @@ resource "azurerm_data_factory_dataset_binary" "data_lake_dataset" {
 resource "azurerm_data_factory_dataset_binary" "backup_dataset" {
   # Dataset resources can't currently be updated due to a bug https://github.com/terraform-providers/terraform-provider-azurerm/issues/11650
   # To modify this resource you will need to manually delete it first
-
+  provider            = azurerm.sub
   name                = "${var.environment_name}BackupStorageDataset"
   data_factory_id     = azurerm_data_factory.this.id
   linked_service_name = azurerm_data_factory_linked_service_data_lake_storage_gen2.backup_storage.name
-  parameters = {
+  parameters          = {
     OutputPath = "Variable not set"
   }
 
   azure_blob_storage_location {
     container = azurerm_storage_data_lake_gen2_filesystem.data-lake-backup.name
-    #path      = "@dataset().OutputPath" # Leaving this blank but can set a custom path if needed
+    #path     = "@dataset().OutputPath" # Leaving this blank but can set a custom path if needed
     filename  = "@concat('','')" # This should not be set, however the Terraform provider requires this to be present and not empty.
   }
 }
 
 resource "azurerm_data_factory_trigger_schedule" "incremental" {
-  name            = "${var.environment_name}IncrementalTrigger"
-  data_factory_id = azurerm_data_factory.this.id
-  pipeline_name   = azurerm_data_factory_pipeline.incremental_backup.name
+  provider            = azurerm.sub
+  name                = "${var.environment_name}IncrementalTrigger"
+  data_factory_id     = azurerm_data_factory.this.id
+  pipeline_name       = azurerm_data_factory_pipeline.incremental_backup.name
   pipeline_parameters = {
     "ScheduledTriggerTime" : "@trigger().scheduledTime"
   }
@@ -148,9 +156,10 @@ resource "azurerm_data_factory_trigger_schedule" "incremental" {
 }
 
 resource "azurerm_data_factory_trigger_schedule" "full" {
-  name            = "${var.environment_name}FullTrigger"
-  data_factory_id = azurerm_data_factory.this.id
-  pipeline_name   = azurerm_data_factory_pipeline.full_backup.name
+  provider            = azurerm.sub
+  name                = "${var.environment_name}FullTrigger"
+  data_factory_id     = azurerm_data_factory.this.id
+  pipeline_name       = azurerm_data_factory_pipeline.full_backup.name
   pipeline_parameters = {
     "ScheduledTriggerTime" : "@trigger().scheduledTime"
   }
