@@ -1,3 +1,6 @@
+# Visual Studio
+.vs/
+
 # Local .terraform directories
 **/.terraform/*
 

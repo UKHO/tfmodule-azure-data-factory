@@ -1,5 +1,13 @@
 # Terraform Module: for Azure Data Factory 
 
+**Version:** 1.2.0
+
+## Compatibility
+
+- **Terraform:** >= 1.2.0
+- **Azure Provider (azurerm):** >= 3.54 (supports both 3.54 and 4.54+)
+- **Azure AD Provider (azuread):** >= 2.0
+
 ##
 
 ## Required Resources
@@ -83,11 +91,11 @@ description = "Email Address for alerts"
 #Example ref
 
 module "data_factory" {
-    source    = "github.com/UKHO/tfmodule-azure-data-factory"
+    source    = "github.com/UKHO/tfmodule-azure-data-factory?ref=v1.2.0"
     providers = {
     azurerm.sub = azurerm.sub
     azurerm.hub = azurerm.hub
-} 
+}
 depends_on                                = [# Refer to existing SA]
 main_storage_account                      = var.main_sa
 main_storage_account_id                   = format("/subscriptions/%s/resourceGroups/%s/providers/Microsoft.Storage/storageAccounts/%s", var.subscription_id, var.rg, azurerm_storage_account.edu_storage_account_data.name)
@@ -106,3 +114,13 @@ dns_zone_rg                               = var.dns_resource_group
 org_ip_addresses                          = var.org_ips
 build_agent_subnet_ids                    = var.agent_subnet_ids
 alert_email_address                       = var.alert_email_address 
+}
+```
+
+## Version History
+
+See [CHANGELOG.md](CHANGELOG.md) for detailed version history and migration notes.
+
+## Contributing
+
+When making changes that affect module behavior or compatibility, please update the CHANGELOG.md file.

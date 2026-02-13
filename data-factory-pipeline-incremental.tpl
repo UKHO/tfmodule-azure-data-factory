@@ -27,10 +27,6 @@ ${jsonencode([{
         "wildcardFolderPath": "*",
         "wildcardFileName": "*",
         "deleteFilesAfterCompletion": false
-      },
-      "formatSettings": {
-        "type": "BinaryReadSettings",
-        "compressionProperties": null
       }
     },
     "sink": {
