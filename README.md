@@ -1,7 +1,5 @@
 # Terraform Module: for Azure Data Factory 
 
-**Version:** 1.2.0
-
 ## Compatibility
 
 - **Terraform:** >= 1.2.0
@@ -116,11 +114,3 @@ build_agent_subnet_ids                    = var.agent_subnet_ids
 alert_email_address                       = var.alert_email_address 
 }
 ```
-
-## Version History
-
-See [CHANGELOG.md](CHANGELOG.md) for detailed version history and migration notes.
-
-## Contributing
-
-When making changes that affect module behavior or compatibility, please update the CHANGELOG.md file.
