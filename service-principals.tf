@@ -31,7 +31,7 @@ resource "azuread_application" "adls" {
 }
 
 resource "azuread_service_principal" "adls" {
-  client_id = azuread_application.adls.application_id
+  client_id = azuread_application.adls.client_id
   owners = [
     data.azuread_client_config.current.object_id
   ]

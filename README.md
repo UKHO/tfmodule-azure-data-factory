@@ -4,7 +4,7 @@
 
 - **Terraform:** >= 1.2.0
 - **Azure Provider (azurerm):** >= 3.54 (supports both 3.54 and 4.54+)
-- **Azure AD Provider (azuread):** >= 2.0
+- **Azure AD Provider (azuread):** >= 3.x.x
 
 ##
 

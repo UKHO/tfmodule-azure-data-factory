@@ -2,7 +2,7 @@ resource "azurerm_key_vault_secret" "adls_sp_client_id" {
   key_vault_id = var.key_vault_id
   provider     = azurerm.sub
   name         = "${var.product_alias}-adls-${var.org}-client-id"
-  value        = azuread_application.adls.application_id
+  value        = azuread_application.adls.client_id
   content_type = "secret"
 }
 
